@@ -23,23 +23,22 @@ export const FinalCTA = () => {
           className="max-w-4xl mx-auto text-center"
         >
           {/* Headline */}
-          <h2 className="text-5xl md:text-6xl font-bold mb-6">
+          <h2 className="text-4xl md:text-6xl font-bold mb-6">
             Pronto Para{" "}
             <span className="gradient-primary bg-clip-text text-transparent">
-              Vender Mais
+              Transformar Suas Vendas
             </span>
             <br />
             Em 7 Dias?
           </h2>
 
           {/* Description */}
-          <p className="text-xl md:text-2xl text-muted-foreground mb-4">
-            Clique no botão abaixo e garanta seu pacote com{" "}
-            <span className="text-primary font-bold">preço especial de fim de ano</span>.
+          <p className="text-lg md:text-2xl text-muted-foreground mb-4">
+            Clique no botão abaixo e fale diretamente comigo no WhatsApp.
           </p>
 
-          <p className="text-lg text-foreground/70 mb-12">
-            ⚡ Vagas limitadas por demanda de operação
+          <p className="text-base md:text-lg text-foreground/80 mb-12">
+            ⚡ As vagas são limitadas porque eu acompanho pessoalmente cada operação.
           </p>
 
           {/* CTA Button */}
@@ -52,10 +51,10 @@ export const FinalCTA = () => {
             <Button
               onClick={handleWhatsAppClick}
               size="lg"
-              className="text-xl px-16 py-10 gradient-primary text-primary-foreground font-bold border-0 glow-blue hover:scale-105 transition-transform duration-300 group"
+              className="text-lg md:text-xl px-12 md:px-16 py-8 md:py-10 gradient-primary text-primary-foreground font-bold border-0 glow-blue hover:scale-105 transition-transform duration-300 group w-full md:w-auto"
             >
-              Quero o Pacote Agora – R$300
-              <ArrowRight className="ml-2 w-6 h-6 group-hover:translate-x-2 transition-transform duration-300" />
+              Quero Destravar Minhas Vendas Agora – R$350
+              <ArrowRight className="ml-2 w-5 h-5 md:w-6 md:h-6 group-hover:translate-x-2 transition-transform duration-300" />
             </Button>
           </motion.div>
 

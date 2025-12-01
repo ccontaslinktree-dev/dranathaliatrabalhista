@@ -1,13 +1,12 @@
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
 
-const features = [
-  "Especialista acompanhando sua conta por 7 dias completos",
-  "Campanhas rodando com otimização diária",
-  "Análise completa da sua operação",
-  "Reunião estratégica com melhorias práticas",
-  "Transformação do seu Instagram em perfil que vende",
-  "Sem mensalidade e sem contrato",
+const reasons = [
+  "• Você tem um especialista de verdade cuidando das suas campanhas",
+  "• Você recebe diagnóstico real do seu Instagram",
+  "• Você aprende em 7 dias o que muita gente demora meses",
+  "• Você ganha clareza, estratégia e resultado rápido",
+  "• Não é curso gravado, não é promessa vaga — é operação real",
 ];
 
 export const OfferSection = () => {
@@ -30,23 +29,23 @@ export const OfferSection = () => {
           {/* Main Offer Card */}
           <div className="glass rounded-3xl overflow-hidden border-glow">
             {/* Header with Price */}
-            <div className="gradient-primary p-12 text-center relative">
+            <div className="gradient-primary p-8 md:p-12 text-center relative">
               <motion.div
                 initial={{ scale: 0.8, opacity: 0 }}
                 whileInView={{ scale: 1, opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.2, duration: 0.5 }}
               >
-                <h2 className="text-4xl md:text-5xl font-bold mb-4 text-primary-foreground">
-                  Toda Essa Estrutura
+                <h2 className="text-3xl md:text-5xl font-bold mb-6 text-primary-foreground">
+                  Por Que o Preço É Apenas
                 </h2>
-                <div className="flex items-center justify-center gap-4 mb-2">
-                  <span className="text-6xl md:text-7xl font-black text-primary-foreground">
-                    R$300
+                <div className="flex items-center justify-center gap-4 mb-4">
+                  <span className="text-5xl md:text-7xl font-black text-primary-foreground">
+                    R$350
                   </span>
                 </div>
-                <p className="text-xl text-primary-foreground/90 font-medium">
-                  Sem Mensalidade • Sem Contrato
+                <p className="text-lg md:text-xl text-primary-foreground/90 font-medium">
+                  ?
                 </p>
               </motion.div>
 
@@ -55,16 +54,45 @@ export const OfferSection = () => {
               <div className="absolute bottom-4 right-4 w-4 h-4 bg-white/30 rounded-full"></div>
             </div>
 
-            {/* Features List */}
-            <div className="p-12 bg-card/50">
-              <p className="text-lg text-foreground/90 mb-8 leading-relaxed">
-                Esse pacote foi criado para <strong className="text-primary">microempreendedores, lojas, 
-                infoprodutores e marcas</strong> que precisam vender mais agora — sem ter que gastar 
-                milhares com agência.
-              </p>
+            {/* Content */}
+            <div className="p-8 md:p-12 bg-card/50">
+              <div className="space-y-6 mb-10">
+                <p className="text-xl md:text-2xl font-bold text-primary text-center">
+                  Porque este pacote não é sobre ganhar dinheiro —<br />
+                  é sobre transformar o seu fim de ano.
+                </p>
+
+                <p className="text-base md:text-lg text-foreground/90 leading-relaxed">
+                  Eu sei como é difícil começar no digital sem direção, sem vendas e sem alguém que 
+                  realmente coloque a mão na massa para ajudar.
+                </p>
+
+                <p className="text-base md:text-lg text-foreground/90 leading-relaxed">
+                  Por isso, reduzi ao máximo o valor e transformei essa oferta em algo que qualquer 
+                  pessoa pudesse aproveitar.
+                </p>
+
+                <div className="p-6 glass rounded-xl border-glow text-center">
+                  <p className="text-lg md:text-xl text-primary font-bold mb-2">
+                    É minha iniciativa pessoal de fim de ano
+                  </p>
+                  <p className="text-base md:text-lg text-foreground/90">
+                    para ajudar quem realmente quer crescer:
+                  </p>
+                  <p className="text-xl md:text-2xl font-bold gradient-primary bg-clip-text text-transparent mt-4">
+                    Natal sem fome. Natal com vendas. Natal com resultados.
+                  </p>
+                </div>
+              </div>
+
+              <h3 className="text-2xl md:text-3xl font-bold text-center mb-8">
+                <span className="gradient-primary bg-clip-text text-transparent">
+                  Por Que Esse Pacote É Diferente
+                </span>
+              </h3>
 
               <div className="space-y-4">
-                {features.map((feature, index) => (
+                {reasons.map((reason, index) => (
                   <motion.div
                     key={index}
                     initial={{ opacity: 0, x: -20 }}
@@ -73,10 +101,7 @@ export const OfferSection = () => {
                     transition={{ delay: 0.1 * index, duration: 0.5 }}
                     className="flex items-start gap-4 group"
                   >
-                    <div className="w-6 h-6 rounded-full gradient-primary flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
-                      <Check className="w-4 h-4 text-primary-foreground" />
-                    </div>
-                    <p className="text-foreground/90 text-lg">{feature}</p>
+                    <p className="text-foreground/90 text-base md:text-lg leading-relaxed">{reason}</p>
                   </motion.div>
                 ))}
               </div>

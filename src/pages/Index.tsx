@@ -1,5 +1,5 @@
 import { Hero } from "@/components/Hero";
-import { VSLSection } from "@/components/VSLSection";
+import { AboutSection } from "@/components/AboutSection";
 import { BenefitsSection } from "@/components/BenefitsSection";
 import { OfferSection } from "@/components/OfferSection";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
@@ -9,7 +9,7 @@ const Index = () => {
   return (
     <div className="min-h-screen gradient-subtle">
       <Hero />
-      <VSLSection />
+      <AboutSection />
       <BenefitsSection />
       <OfferSection />
       <TestimonialsSection />
