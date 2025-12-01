@@ -4,32 +4,32 @@ import { Zap, Target, Users, TrendingUp, Calendar } from "lucide-react";
 const benefits = [
   {
     icon: Zap,
-    title: "Gestão de Tráfego Pago por 7 Dias",
-    description: "Campanhas reais, otimizadas e rodando de verdade.",
+    title: "Gestão Completa de Tráfego Pago por 7 Dias",
+    description: "Campanhas reais rodando na sua conta com otimizações diárias.",
     delay: 0.1,
   },
   {
     icon: Target,
-    title: "Página de Público e Estratégia Pronta",
-    description: "Eu configuro tudo: públicos, criativos, objetivos e análises.",
+    title: "Auditoria e Correção do Seu Instagram",
+    description: "Aponto o que funciona, o que atrapalha e o que precisa ser mudado imediatamente.",
     delay: 0.2,
   },
   {
-    icon: Users,
-    title: "Reunião Final de Ajuste e Melhoria no Instagram",
-    description: "Você sai sabendo exatamente o que fazer para continuar crescendo.",
+    icon: Calendar,
+    title: "Estratégia Atualizada Para Vender no Fim de Ano",
+    description: "Vou te guiar exatamente sobre como atrair clientes nesses dias de alta demanda.",
     delay: 0.3,
   },
   {
-    icon: TrendingUp,
-    title: "Acompanhamento Diário Durante a Operação",
-    description: "Ajustes, otimizações e alertas todos os dias.",
+    icon: Users,
+    title: "Reunião Final (Plano de Ação Para 2025)",
+    description: "Você sai com um plano claro para continuar vendendo — mesmo depois dos 7 dias.",
     delay: 0.4,
   },
   {
-    icon: Calendar,
-    title: "Aceleração de Resultados no Fim do Ano",
-    description: "A melhor época para vender — com a estratégia certa.",
+    icon: TrendingUp,
+    title: "Suporte Direto Durante Todo o Processo",
+    description: "Você não vai ficar perdido. Eu te acompanho e te guio.",
     delay: 0.5,
   },
 ];
@@ -51,12 +51,16 @@ export const BenefitsSection = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            O Que Você Recebe No Pacote{" "}
+          <h2 className="text-3xl md:text-5xl font-bold mb-4">
             <span className="gradient-primary bg-clip-text text-transparent">
-              "7 Dias Para Vender Mais"
+              O Que Você Recebe
             </span>
+            <br />
+            No Pacote Especial
           </h2>
+          <p className="text-base md:text-xl text-muted-foreground">
+            Tudo que você precisa para começar a vender mais em apenas 7 dias
+          </p>
         </motion.div>
 
         {/* Benefits Grid */}

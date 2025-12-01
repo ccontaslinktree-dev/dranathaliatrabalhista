@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import heroPhoto from "@/assets/clayverson-photo.jpg";
 
 export const Hero = () => {
   const handleWhatsAppClick = () => {
@@ -7,7 +8,7 @@ export const Hero = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden py-12 px-4">
       {/* Animated Background Elements */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full blur-[100px] animate-float"></div>
@@ -21,36 +22,65 @@ export const Hero = () => {
         <div className="absolute bottom-1/3 right-1/4 w-24 h-24 border border-secondary/30 rotate-12 animate-float-delayed"></div>
       </div>
 
-      <div className="container mx-auto px-4 py-20 relative z-10">
+      <div className="container mx-auto max-w-2xl relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center max-w-5xl mx-auto"
+          className="text-center"
         >
+          {/* Photo */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6 }}
+            className="mb-8"
+          >
+            <div className="relative inline-block">
+              <div className="absolute inset-0 gradient-primary rounded-full blur-xl opacity-50"></div>
+              <img 
+                src={heroPhoto} 
+                alt="Clayverson - Especialista em Tráfego Pago" 
+                className="relative w-48 h-48 md:w-64 md:h-64 rounded-full object-cover border-4 border-primary/50 shadow-2xl"
+              />
+            </div>
+          </motion.div>
+
+          {/* Badge */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+            className="inline-block mb-6"
+          >
+            <span className="px-6 py-2 rounded-full gradient-primary text-primary-foreground font-bold text-sm">
+              🎄 Natal Sem Fome
+            </span>
+          </motion.div>
+
           {/* Main Headline */}
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
             <span className="gradient-primary bg-clip-text text-transparent">
-              Transforme Seu Instagram
+              Comece a Vender Mais
             </span>
             <br />
             <span className="text-foreground">
-              em Uma Máquina de Vendas
+              em Apenas 7 Dias
             </span>
-            <br />
-            <span className="text-foreground">em Apenas </span>
-            <span className="gradient-primary bg-clip-text text-transparent">7 Dias</span>
           </h1>
 
           {/* Subheadline */}
-          <p className="text-xl md:text-2xl text-muted-foreground mb-4 max-w-3xl mx-auto">
-            Com Tráfego Pago + Auditoria Profissional!
+          <p className="text-xl md:text-2xl text-muted-foreground mb-4">
+            Gestão de Tráfego + Auditoria do Instagram
           </p>
 
-          <p className="text-lg md:text-xl text-foreground/80 mb-12 max-w-3xl mx-auto leading-relaxed">
-            Fechamos todo o setup, rodamos campanhas reais por 7 dias e ainda te entregamos 
-            uma reunião estratégica de melhoria para seu Instagram.{" "}
-            <span className="text-primary font-bold">Tudo por apenas R$300.</span>
+          <p className="text-2xl md:text-3xl font-bold text-primary mb-8">
+            Por Apenas R$350
+          </p>
+
+          <p className="text-base md:text-lg text-foreground/80 mb-10 leading-relaxed">
+            Uma oferta especial de fim de ano para você destravar suas vendas com anúncios e 
+            transformar seu Instagram em um perfil que realmente vende.
           </p>
 
           {/* CTA Button */}
@@ -62,9 +92,9 @@ export const Hero = () => {
             <Button
               onClick={handleWhatsAppClick}
               size="lg"
-              className="text-lg px-12 py-8 gradient-primary text-primary-foreground font-bold border-0 glow-blue hover:scale-105 transition-transform duration-300"
+              className="text-lg px-12 py-8 gradient-primary text-primary-foreground font-bold border-0 glow-blue hover:scale-105 transition-transform duration-300 w-full md:w-auto"
             >
-              🚀 Quero Vender Mais Agora
+              🚀 Quero Começar Agora!
             </Button>
           </motion.div>
 
@@ -73,9 +103,9 @@ export const Hero = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6, duration: 0.5 }}
-            className="text-sm text-muted-foreground mt-8"
+            className="text-sm text-muted-foreground mt-6"
           >
-            ⚡ Vagas limitadas por demanda de operação
+            ⚡ Vagas limitadas - Acompanhamento pessoal
           </motion.p>
         </motion.div>
       </div>
