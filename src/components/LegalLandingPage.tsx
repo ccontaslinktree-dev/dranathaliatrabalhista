@@ -20,6 +20,28 @@ const detailPhoto = new URL("../../DSC09852-Editar.jpg", import.meta.url).href;
 const WHATSAPP_NUMBER = "5585989570299";
 const PAGE_NAME = "Página Trabalho sem Carteira Assinada";
 
+const createEventId = () => `evt_${Date.now()}_${Math.random().toString(36).slice(2, 12)}`;
+
+const trackMetaEvent = (eventName: "Lead" | "Contact", eventId: string, userData?: Record<string, string>) => {
+  const fbq = (window as Window & { fbq?: (...args: unknown[]) => void }).fbq;
+  fbq?.("track", eventName, {}, { eventID: eventId });
+
+  fetch("/api/meta-capi", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    keepalive: true,
+    body: JSON.stringify({
+      event_name: eventName,
+      event_id: eventId,
+      page_name: PAGE_NAME,
+      event_source_url: window.location.href,
+      user_data: userData,
+    }),
+  }).catch(() => {
+    // O Pixel do navegador continua funcionando mesmo se o endpoint do servidor estiver indisponível.
+  });
+};
+
 const situations = [
   {
     icon: FileText,
@@ -64,6 +86,9 @@ const scrollToForm = () => {
 };
 
 const openDirectWhatsApp = () => {
+  const eventId = createEventId();
+  trackMetaEvent("Contact", eventId);
+
   const message = encodeURIComponent(
     `Olá, Dra. Nathalia. Vim pela ${PAGE_NAME} e gostaria de conversar sobre minha situação trabalhista.`
   );
@@ -88,6 +113,13 @@ export const LegalLandingPage = () => {
     event.preventDefault();
 
     if (!form.consent) return;
+
+    const eventId = createEventId();
+    trackMetaEvent("Lead", eventId, {
+      name: form.name,
+      email: form.email,
+      phone: form.phone,
+    });
 
     const message = encodeURIComponent(
       `Olá, Dra. Nathalia! Vim pela ${PAGE_NAME}.%0A%0A` +
