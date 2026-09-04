@@ -390,3 +390,84 @@ div[style*="Edit with Lovable"],
     align-items: flex-start;
   }
 }
+
+
+/* Ponte de qualificação entre as situações apresentadas e o formulário */
+.legal-qualification-bridge {
+  margin-top: 42px;
+  padding: 34px 38px;
+  border: 1px solid rgba(181, 138, 76, .28);
+  background: linear-gradient(135deg, #faf8f4 0%, #f3eee5 100%);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 30px;
+}
+.legal-qualification-number {
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #b58a4c;
+  color: #8c6732;
+  font-family: Georgia, serif;
+  font-size: 21px;
+}
+.legal-qualification-content > span {
+  display: block;
+  margin-bottom: 8px;
+  color: #96723c;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .14em;
+}
+.legal-qualification-content h3 {
+  margin: 0 0 10px;
+  color: #17263a;
+  font-size: clamp(23px, 2.3vw, 31px);
+  line-height: 1.15;
+}
+.legal-qualification-content > p {
+  margin: 0;
+  max-width: 760px;
+  color: #5e6470;
+  line-height: 1.65;
+}
+.legal-qualification-points {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin-top: 16px;
+}
+.legal-qualification-points span {
+  color: #394452;
+  font-size: 13px;
+  font-weight: 600;
+}
+.legal-qualification-note {
+  margin-top: 14px !important;
+  color: #17263a !important;
+  font-weight: 700;
+}
+
+@media (max-width: 900px) {
+  .legal-qualification-bridge {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    padding: 30px 24px;
+  }
+  .legal-qualification-bridge .legal-outline-button {
+    width: 100%;
+  }
+}
+@media (max-width: 640px) {
+  .legal-qualification-bridge {
+    margin-top: 28px;
+    padding: 25px 18px;
+  }
+  .legal-qualification-points {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 9px;
+  }
+}
