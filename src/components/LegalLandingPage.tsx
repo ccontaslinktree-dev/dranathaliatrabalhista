@@ -7,6 +7,8 @@ import {
   Gavel,
   Handshake,
   MessageCircle,
+  Instagram,
+  MapPin,
   Scale,
   Send,
   ShieldCheck,
@@ -148,19 +150,18 @@ export const LegalLandingPage = () => {
               <span className="legal-eyebrow">DIREITO DO TRABALHO</span>
               <h1>
                 Trabalhou sem carteira assinada?
-                <strong>Entenda quais aspectos podem ser relevantes para analisar a sua situação.</strong>
+                <strong>Você pode ter direitos trabalhistas a receber.</strong>
               </h1>
               <p>
-                A ausência de registro é apenas um dos pontos relacionados à análise de uma relação de trabalho.
-                Conheça algumas informações que podem ajudar a compreender melhor o seu caso.
+                A ausência de registro não elimina seus direitos. Dependendo do caso, pode ser possível buscar o reconhecimento do vínculo, FGTS, férias, 13º salário, horas extras e verbas rescisórias.
               </p>
               <button className="legal-primary-button" onClick={scrollToForm} type="button">
                 <FileText size={20} />
-                PREENCHER INFORMAÇÕES
+                ANALISAR MEU CASO
                 <ArrowRight size={19} />
               </button>
               <div className="legal-online-note">
-                <span className="legal-dot" /> Atendimento online e análise individualizada
+                <span className="legal-dot" /> Atendimento online, sigiloso e individualizado
               </div>
             </div>
 
@@ -199,12 +200,12 @@ export const LegalLandingPage = () => {
 
           <div className="legal-mid-cta">
             <div>
-              <span>PRIMEIRO PASSO: ORGANIZAR AS INFORMAÇÕES</span>
-              <h3>Seu caso merece uma análise individual.</h3>
-              <p>Conte brevemente o que aconteceu para iniciar o contato com as informações mais organizadas.</p>
+              <span>PRIMEIRO PASSO: CONTE O QUE ACONTECEU</span>
+              <h3>Trabalhou sem registro? Vamos analisar o seu caso.</h3>
+              <p>Responda algumas perguntas sobre como era o trabalho e receba uma análise inicial da sua situação.</p>
             </div>
             <button className="legal-outline-button" onClick={scrollToForm} type="button">
-              PREENCHER FORMULÁRIO <ArrowRight size={18} />
+              ANALISAR MEU CASO <ArrowRight size={18} />
             </button>
           </div>
         </div>
@@ -213,20 +214,21 @@ export const LegalLandingPage = () => {
       <section className="legal-explanation-section">
         <div className="legal-container legal-explanation-grid">
           <div className="legal-explanation-copy">
-            <span className="legal-eyebrow">RELAÇÃO DE TRABALHO</span>
-            <h2>O que pode ser analisado em uma situação como essa?</h2>
+            <span className="legal-eyebrow">RECONHECIMENTO DO VÍNCULO</span>
+            <h2>Trabalhar sem carteira assinada não significa trabalhar sem direitos.</h2>
             <p>
-              A análise de uma possível relação de emprego depende das circunstâncias concretas de cada caso.
-              A forma como o trabalho era realizado e a dinâmica existente entre as partes podem ser relevantes.
+              Para verificar se existiu uma relação de emprego, é necessário compreender como o trabalho acontecia na prática.
+              Mais do que o nome dado à contratação, importa a realidade vivida pelo trabalhador.
             </p>
             <div className="legal-check-list">
-              <div><CheckCircle2 size={20} /> Como era a rotina e a frequência do trabalho</div>
-              <div><CheckCircle2 size={20} /> Como os serviços eram organizados e orientados</div>
-              <div><CheckCircle2 size={20} /> A forma e a frequência dos pagamentos</div>
-              <div><CheckCircle2 size={20} /> Mensagens, documentos e outros elementos disponíveis</div>
+              <div><CheckCircle2 size={20} /> Se o trabalho era realizado pessoalmente</div>
+              <div><CheckCircle2 size={20} /> Se havia frequência, rotina ou horários definidos</div>
+              <div><CheckCircle2 size={20} /> Se existiam ordens, cobranças ou fiscalização</div>
+              <div><CheckCircle2 size={20} /> Se havia pagamento pelo serviço prestado</div>
+              <div><CheckCircle2 size={20} /> Quais documentos, mensagens e testemunhas podem comprovar os fatos</div>
             </div>
             <button className="legal-text-button" onClick={scrollToForm} type="button">
-              ORGANIZAR MINHAS INFORMAÇÕES <ArrowRight size={18} />
+              QUERO ANALISAR MEU CASO <ArrowRight size={18} />
             </button>
           </div>
           <div className="legal-explanation-image legal-photo-contain">
@@ -244,14 +246,16 @@ export const LegalLandingPage = () => {
             <span className="legal-eyebrow legal-eyebrow-dark">ATENDIMENTO PROFISSIONAL</span>
             <h2>Dra. Nathalia Tavares</h2>
             <p>
-              O primeiro atendimento começa pela compreensão da realidade apresentada e das particularidades de cada situação.
+              Advogada com mais de 15 anos de experiência, atuante na defesa dos direitos dos trabalhadores.
             </p>
             <p>
-              A proposta desta página é facilitar esse primeiro contato, permitindo que as informações essenciais
-              sejam organizadas antes da conversa pelo WhatsApp.
+              Cada relação de trabalho possui suas particularidades. Por isso, o atendimento começa pela escuta atenta dos fatos, pela análise dos documentos e pela identificação dos direitos que podem ter sido violados.
+            </p>
+            <p>
+              Preencha as informações iniciais para que o seu caso seja compreendido antes do atendimento pelo WhatsApp.
             </p>
             <button className="legal-primary-button legal-dark-button" onClick={scrollToForm} type="button">
-              PREENCHER MINHAS INFORMAÇÕES <ArrowRight size={19} />
+              QUERO ANALISAR O MEU CASO <ArrowRight size={19} />
             </button>
           </div>
         </div>
@@ -375,15 +379,20 @@ export const LegalLandingPage = () => {
             <img src={detailPhoto} alt="Dra. Nathalia Tavares" />
           </div>
           <div>
-            <span className="legal-eyebrow">DIREITO DO TRABALHO</span>
-            <h2>Organize suas informações antes de iniciar a conversa.</h2>
+            <span className="legal-eyebrow">ATENDIMENTO</span>
+            <h2>Conte o que aconteceu e dê o primeiro passo para analisar a sua situação.</h2>
             <p>
-              Preencha o formulário para apresentar sua principal dúvida e seguir para o WhatsApp
-              com as informações iniciais já organizadas.
+              Atendimento presencial em Fortaleza e online para todo o Brasil. Preencha as informações iniciais para organizar seu primeiro contato com a Dra. Nathalia.
             </p>
-            <button className="legal-primary-button" onClick={scrollToForm} type="button">
-              PREENCHER FORMULÁRIO <ArrowRight size={18} />
-            </button>
+            <div className="legal-location-note"><MapPin size={19} /> Fortaleza, CE • Atendimento online em todo o Brasil</div>
+            <div className="legal-final-actions">
+              <button className="legal-primary-button" onClick={scrollToForm} type="button">
+                ANALISAR MEU CASO <ArrowRight size={18} />
+              </button>
+              <a className="legal-instagram-button" href="https://www.instagram.com/advnathaliatavares?igsi=ZnZuanM0dTg3a3Vi" target="_blank" rel="noreferrer">
+                <Instagram size={18} /> @advnathaliatavares
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -391,6 +400,8 @@ export const LegalLandingPage = () => {
       <footer className="legal-footer">
         <div className="legal-container legal-footer-inner">
           <div className="legal-brand"><span className="legal-brand-mark">NT</span><span>DRA. NATHALIA TAVARES</span></div>
+          <p>Atendimento presencial em Fortaleza, CE, e atendimento online em todo o Brasil.</p>
+          <a className="legal-footer-instagram" href="https://www.instagram.com/advnathaliatavares?igsi=ZnZuanM0dTg3a3Vi" target="_blank" rel="noreferrer"><Instagram size={15} /> @advnathaliatavares</a>
           <p>Conteúdo de caráter informativo. A análise e a orientação jurídica dependem das circunstâncias de cada caso.</p>
           <p>© {new Date().getFullYear()} Dra. Nathalia Tavares. Todos os direitos reservados.</p>
         </div>
