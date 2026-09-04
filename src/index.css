@@ -264,3 +264,55 @@ div[style*="Edit with Lovable"],
     linear-gradient(135deg, rgba(181,138,76,.08), transparent 48%),
     #edf0f2;
 }
+
+
+/* Mobile: evita duas imagens consecutivas. Após a imagem explicativa, entra o conteúdo
+   de apresentação antes da próxima fotografia, criando uma leitura editorial contínua. */
+@media (max-width: 900px) {
+  .legal-profile-grid {
+    gap: 32px;
+  }
+
+  .legal-profile-copy {
+    order: 1;
+  }
+
+  .legal-profile-image {
+    order: 2;
+  }
+
+  .legal-profile-copy::before {
+    content: "ATENDIMENTO INDIVIDUALIZADO";
+    display: inline-block;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(181,138,76,.45);
+    color: #8a7047;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .16em;
+  }
+
+  .legal-profile-copy .legal-eyebrow {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .legal-explanation-section {
+    padding-bottom: 48px;
+  }
+
+  .legal-profile-section {
+    padding-top: 48px;
+    padding-bottom: 60px;
+  }
+
+  .legal-profile-copy {
+    padding: 8px 4px 4px;
+  }
+
+  .legal-profile-copy h2 {
+    margin-top: 0;
+  }
+}
