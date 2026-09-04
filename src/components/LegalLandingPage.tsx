@@ -198,11 +198,23 @@ export const LegalLandingPage = () => {
             ))}
           </div>
 
-          <div className="legal-mid-cta">
-            <div>
+          <div className="legal-qualification-bridge">
+            <div className="legal-qualification-number">01</div>
+            <div className="legal-qualification-content">
               <span>PRIMEIRO PASSO: CONTE O QUE ACONTECEU</span>
-              <h3>Trabalhou sem registro? Vamos analisar o seu caso.</h3>
-              <p>Responda algumas perguntas sobre como era o trabalho e receba uma análise inicial da sua situação.</p>
+              <h3>Você se identificou com alguma dessas situações?</h3>
+              <p>
+                Se alguma dessas situações faz parte da sua realidade, o próximo passo é explicar como o trabalho
+                acontecia. As informações iniciais ajudam a compreender melhor o contexto antes do atendimento.
+              </p>
+              <div className="legal-qualification-points">
+                <span>✓ Conte como era sua rotina de trabalho</span>
+                <span>✓ Informe qual situação mais se aproxima do seu caso</span>
+                <span>✓ Descreva os fatos mais importantes</span>
+              </div>
+              <p className="legal-qualification-note">
+                Trabalhou sem registro? Vamos analisar as informações do seu caso.
+              </p>
             </div>
             <button className="legal-outline-button" onClick={scrollToForm} type="button">
               ANALISAR MEU CASO <ArrowRight size={18} />
