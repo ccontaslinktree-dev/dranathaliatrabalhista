@@ -316,3 +316,77 @@ div[style*="Edit with Lovable"],
     margin-top: 0;
   }
 }
+
+
+/* Informações institucionais de atendimento e redes sociais */
+.legal-location-note {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 18px 0 22px;
+  color: #6b6256;
+  font-size: 14px;
+  font-weight: 600;
+}
+.legal-location-note svg { color: #a88145; flex: 0 0 auto; }
+
+.legal-final-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+.legal-instagram-button {
+  min-height: 58px;
+  padding: 0 21px;
+  border: 1px solid #d7d2c8;
+  border-radius: 8px;
+  color: #17263a;
+  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 700;
+  transition: background .2s ease, transform .2s ease, border-color .2s ease;
+}
+.legal-instagram-button:hover {
+  transform: translateY(-2px);
+  background: #f5f1e9;
+  border-color: #b58a4c;
+}
+.legal-footer-instagram {
+  color: #d8bb81;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin: 8px 0 12px;
+  text-decoration: none;
+  font-size: 12px;
+}
+.legal-footer-instagram:hover { color: #f0d39a; }
+
+@media (max-width: 900px) {
+  .legal-final-actions {
+    justify-content: center;
+  }
+  .legal-location-note {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .legal-final-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  .legal-instagram-button {
+    width: 100%;
+  }
+  .legal-location-note {
+    text-align: center;
+    align-items: flex-start;
+  }
+}
