@@ -230,3 +230,37 @@
     .legal-floating-whatsapp { width: 52px; height: 52px; left: 15px; bottom: 15px; }
   }
 }
+
+/* Remove elementos de edição/branding quando forem injetados no ambiente de preview. */
+a[href*="lovable.dev"],
+iframe[src*="lovable.dev"],
+div[style*="Edit with Lovable"],
+.lovable-badge {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  z-index: -9999 !important;
+}
+
+/* Refinamento visual: ritmo alternado entre conteúdo, imagem e áreas de decisão. */
+.legal-explanation-section { position: relative; }
+.legal-profile-section { position: relative; }
+.legal-profile-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: min(1080px, calc(100% - 60px));
+  height: 1px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, transparent, rgba(181,138,76,.42), transparent);
+}
+.legal-explanation-image,
+.legal-profile-image,
+.legal-final-grid > div:first-child {
+  background:
+    linear-gradient(135deg, rgba(181,138,76,.08), transparent 48%),
+    #edf0f2;
+}
