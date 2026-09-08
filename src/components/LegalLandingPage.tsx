@@ -112,7 +112,6 @@ const openDirectWhatsApp = () => {
 export const LegalLandingPage = () => {
   const [form, setForm] = useState({
     name: "",
-    email: "",
     phone: "",
     pain: "",
     details: "",
@@ -128,24 +127,31 @@ export const LegalLandingPage = () => {
 
     if (!form.consent) return;
 
-    const eventId = createEventId();
-    trackMetaEvent("Lead", eventId, {
-      name: form.name,
-      email: form.email,
-      phone: form.phone,
-    });
+    const userData = { name: form.name, phone: form.phone };
+
+    // Etapa 1: pessoa concluiu o formulário e clicou para ir ao WhatsApp
+    trackMetaEvent("InitiateCheckout", createEventId(), userData);
 
     const message = encodeURIComponent(
-      `Olá, Dra. Nathalia! Vim pela ${PAGE_NAME}.%0A%0A` +
-      `Nome: ${form.name}%0A` +
-      `WhatsApp: ${form.phone}%0A` +
-      `E-mail: ${form.email}%0A` +
-      `Principal situação: ${form.pain}%0A%0A` +
-      `Relato inicial:%0A${form.details}`
+      `Olá, Dra. Nathalia! Vim pela ${PAGE_NAME}.\n\n` +
+      `Nome: ${form.name}\n` +
+      `WhatsApp: ${form.phone}\n` +
+      `Principal situação: ${form.pain}\n\n` +
+      `Relato inicial:\n${form.details}`
     );
 
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, "_blank", "noopener,noreferrer");
+    const whatsappWindow = window.open(
+      `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`,
+      "_blank",
+      "noopener,noreferrer"
+    );
+
+    // Etapa 2: pessoa foi realmente direcionada ao WhatsApp
+    if (whatsappWindow) {
+      trackMetaEvent("Lead", createEventId(), userData);
+    }
   };
+
 
   return (
     <main className="legal-page">
