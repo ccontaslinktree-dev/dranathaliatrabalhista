@@ -342,23 +342,16 @@ export const LegalLandingPage = () => {
                 <input
                   required
                   type="tel"
+                  inputMode="numeric"
+                  autoComplete="tel"
                   value={form.phone}
-                  onChange={(event) => handleChange("phone", event.target.value)}
+                  onChange={(event) => handleChange("phone", formatPhone(event.target.value))}
                   placeholder="(00) 00000-0000"
                 />
               </label>
             </div>
 
-            <label>
-              <span>E-mail</span>
-              <input
-                required
-                type="email"
-                value={form.email}
-                onChange={(event) => handleChange("email", event.target.value)}
-                placeholder="seuemail@exemplo.com"
-              />
-            </label>
+
 
             <label>
               <span>Qual situação melhor representa sua principal dúvida?</span>
