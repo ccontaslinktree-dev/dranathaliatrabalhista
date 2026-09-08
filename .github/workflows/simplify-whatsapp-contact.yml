@@ -1,0 +1,156 @@
+name: Simplify contact flow
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-contact-flow:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-actions[bot]'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Replace form with WhatsApp CTA
+        shell: bash
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+          import re
+
+          path = Path('src/components/LegalLandingPage.tsx')
+          text = path.read_text(encoding='utf-8')
+
+          # Remove form state and handlers; direct WhatsApp contact needs no qualification form.
+          text = re.sub(
+              r'  const \[form, setForm\] = useState\(\{.*?\n  \};\n\n\n  return \(',
+              '  return (',
+              text,
+              flags=re.S,
+          )
+
+          # Remove the now-unused smooth-scroll helper.
+          text = re.sub(
+              r'const scrollToForm = \(\) => \{.*?\n\};\n\n',
+              '',
+              text,
+              flags=re.S,
+          )
+
+          # Remove React state/change/submit handlers if they remain after the first replacement.
+          text = re.sub(
+              r'  const handleChange = .*?\n  \};\n\n  const handleSubmit = .*?\n  \};\n\n\n',
+              '',
+              text,
+              flags=re.S,
+          )
+
+          # Every former form-scroll CTA now opens WhatsApp directly.
+          text = text.replace('onClick={scrollToForm}', 'onClick={openDirectWhatsApp}')
+
+          # Rewrite the process section so the visitor understands the simpler flow.
+          text = text.replace(
+              '["1", "Preencha as informações", "Conte, de forma breve, o que aconteceu e selecione a situação que melhor representa sua principal dúvida."],\n  ["2", "Organize os detalhes", "As informações iniciais ajudam a compreender o contexto e direcionar melhor o primeiro atendimento."],\n  ["3", "Converse com a advogada", "Após o envio, você será direcionado ao WhatsApp com as informações organizadas para iniciar a conversa."],',
+              '["1", "Clique no WhatsApp", "Você entra em contato diretamente com a Dra. Nathalia, sem preencher formulários."],\n  ["2", "Conte o que aconteceu", "Explique sua situação com liberdade e envie as informações que considerar importantes."],\n  ["3", "Receba orientação inicial", "A conversa pelo WhatsApp é o primeiro passo para entender seu caso e avaliar os próximos caminhos."],'
+          )
+
+          # Replace the entire qualification form section with a direct WhatsApp contact section.
+          new_section = '''      <section className="legal-form-section legal-whatsapp-section" id="contato">\n        <div className="legal-container legal-whatsapp-card">\n          <div className="legal-whatsapp-copy">\n            <span className="legal-eyebrow legal-eyebrow-dark">FALE DIRETAMENTE COM A ADVOGADA</span>\n            <h2>Quer entender melhor se você pode ter direitos trabalhistas?</h2>\n            <p>Não precisa preencher formulário. Clique no botão abaixo e fale diretamente com a Dra. Nathalia pelo WhatsApp. Conte o que aconteceu e tire suas dúvidas sobre a sua situação.</p>\n            <div className="legal-whatsapp-benefits">\n              <span><ShieldCheck size={20} /> Atendimento individualizado</span>\n              <span><ShieldCheck size={20} /> Conversa direta pelo WhatsApp</span>\n              <span><ShieldCheck size={20} /> Primeiro contato simples e sem burocracia</span>\n            </div>\n            <button className="legal-primary-button legal-whatsapp-button" onClick={openDirectWhatsApp} type="button">\n              <MessageCircle size={21} />\n              FALAR COM A DRA. NATHALIA NO WHATSAPP\n              <ArrowRight size={19} />\n            </button>\n            <p className="legal-whatsapp-disclaimer">O primeiro contato não substitui a análise jurídica individual do caso.</p>\n          </div>\n        </div>\n      </section>\n'''
+
+          pattern = r'      <section className="legal-form-section" id="formulario">.*?      </section>\n'
+          text, count = re.subn(pattern, new_section, text, count=1, flags=re.S)
+          if count != 1:
+              raise SystemExit('Could not find the existing form section')
+
+          # Remove useState import now that the form is gone.
+          text = text.replace('import { useState } from "react";\n', '')
+
+          path.write_text(text, encoding='utf-8')
+          print('Updated LegalLandingPage.tsx')
+          PY
+
+      - name: Add WhatsApp section styling
+        shell: bash
+        run: |
+          cat >> src/index.css <<'CSS'
+
+          /* Direct WhatsApp contact flow */
+          .legal-whatsapp-section { scroll-margin-top: 20px; }
+          .legal-whatsapp-card {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            border: 1px solid #dfddd7;
+            border-radius: 12px;
+            padding: 54px;
+            box-shadow: 0 20px 55px rgba(25,36,50,.08);
+            text-align: center;
+          }
+          .legal-whatsapp-copy h2 {
+            font-family: 'Playfair Display', serif;
+            color: #17263a;
+            font-size: clamp(2.25rem,4vw,3.45rem);
+            line-height: 1.08;
+            margin: 0 0 18px;
+          }
+          .legal-whatsapp-copy > p {
+            color: #626a72;
+            line-height: 1.75;
+            font-size: 16px;
+            max-width: 720px;
+            margin: 0 auto 25px;
+          }
+          .legal-whatsapp-benefits {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 12px;
+            max-width: 760px;
+            margin: 0 auto 30px;
+          }
+          .legal-whatsapp-benefits span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: #3e4a58;
+            font-size: 13px;
+            font-weight: 700;
+          }
+          .legal-whatsapp-benefits svg { color: #a88145; flex: 0 0 auto; }
+          .legal-whatsapp-button {
+            min-height: 62px;
+            padding: 0 28px;
+            background: #168a4a;
+            box-shadow: 0 14px 30px rgba(22,138,74,.20);
+          }
+          .legal-whatsapp-button:hover { background: #11723c; }
+          .legal-whatsapp-disclaimer {
+            margin: 16px auto 0 !important;
+            font-size: 12px !important;
+            color: #7a8087 !important;
+          }
+          @media (max-width: 760px) {
+            .legal-whatsapp-card { padding: 36px 22px; }
+            .legal-whatsapp-benefits { grid-template-columns: 1fr; gap: 10px; }
+            .legal-whatsapp-button { width: 100%; font-size: 12px; }
+          }
+          CSS
+
+      - name: Verify build
+        run: |
+          npm ci
+          npm run build
+
+      - name: Commit changes
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/components/LegalLandingPage.tsx src/index.css
+          git diff --cached --quiet && echo "No changes to commit" || git commit -m "feat: simplify lead flow to direct WhatsApp"
+          git push
