@@ -13,6 +13,8 @@ import {
   Send,
   ShieldCheck,
 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+
 
 const heroPhoto = new URL("../../DSC09661-Editar.jpg.jpeg", import.meta.url).href;
 const profilePhoto = new URL("../../DSC09688-Editar.jpg", import.meta.url).href;
@@ -24,25 +26,35 @@ const PAGE_NAME = "Página Trabalho sem Carteira Assinada";
 
 const createEventId = () => `evt_${Date.now()}_${Math.random().toString(36).slice(2, 12)}`;
 
-const trackMetaEvent = (eventName: "Lead" | "Contact", eventId: string, userData?: Record<string, string>) => {
+type MetaEvent = "Lead" | "Contact" | "InitiateCheckout";
+
+const trackMetaEvent = (eventName: MetaEvent, eventId: string, userData?: Record<string, string>) => {
   const fbq = (window as Window & { fbq?: (...args: unknown[]) => void }).fbq;
   fbq?.("track", eventName, {}, { eventID: eventId });
 
-  fetch("/api/meta-capi", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    keepalive: true,
-    body: JSON.stringify({
-      event_name: eventName,
-      event_id: eventId,
-      page_name: PAGE_NAME,
-      event_source_url: window.location.href,
-      user_data: userData,
-    }),
-  }).catch(() => {
-    // O Pixel do navegador continua funcionando mesmo se o endpoint do servidor estiver indisponível.
-  });
+  supabase.functions
+    .invoke("meta-capi", {
+      body: {
+        event_name: eventName,
+        event_id: eventId,
+        page_name: PAGE_NAME,
+        event_source_url: window.location.href,
+        user_data: userData,
+      },
+    })
+    .catch(() => {
+      // O Pixel do navegador continua funcionando mesmo se o servidor estiver indisponível.
+    });
 };
+
+const formatPhone = (value: string) => {
+  const digits = value.replace(/\D/g, "").slice(0, 11);
+  if (digits.length <= 2) return digits.length ? `(${digits}` : "";
+  if (digits.length <= 6) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
+  if (digits.length <= 10) return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`;
+  return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
+};
+
 
 const situations = [
   {
@@ -100,7 +112,6 @@ const openDirectWhatsApp = () => {
 export const LegalLandingPage = () => {
   const [form, setForm] = useState({
     name: "",
-    email: "",
     phone: "",
     pain: "",
     details: "",
@@ -116,24 +127,31 @@ export const LegalLandingPage = () => {
 
     if (!form.consent) return;
 
-    const eventId = createEventId();
-    trackMetaEvent("Lead", eventId, {
-      name: form.name,
-      email: form.email,
-      phone: form.phone,
-    });
+    const userData = { name: form.name, phone: form.phone };
+
+    // Etapa 1: pessoa concluiu o formulário e clicou para ir ao WhatsApp
+    trackMetaEvent("InitiateCheckout", createEventId(), userData);
 
     const message = encodeURIComponent(
-      `Olá, Dra. Nathalia! Vim pela ${PAGE_NAME}.%0A%0A` +
-      `Nome: ${form.name}%0A` +
-      `WhatsApp: ${form.phone}%0A` +
-      `E-mail: ${form.email}%0A` +
-      `Principal situação: ${form.pain}%0A%0A` +
-      `Relato inicial:%0A${form.details}`
+      `Olá, Dra. Nathalia! Vim pela ${PAGE_NAME}.\n\n` +
+      `Nome: ${form.name}\n` +
+      `WhatsApp: ${form.phone}\n` +
+      `Principal situação: ${form.pain}\n\n` +
+      `Relato inicial:\n${form.details}`
     );
 
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, "_blank", "noopener,noreferrer");
+    const whatsappWindow = window.open(
+      `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`,
+      "_blank",
+      "noopener,noreferrer"
+    );
+
+    // Etapa 2: pessoa foi realmente direcionada ao WhatsApp
+    if (whatsappWindow) {
+      trackMetaEvent("Lead", createEventId(), userData);
+    }
   };
+
 
   return (
     <main className="legal-page">
@@ -324,23 +342,16 @@ export const LegalLandingPage = () => {
                 <input
                   required
                   type="tel"
+                  inputMode="numeric"
+                  autoComplete="tel"
                   value={form.phone}
-                  onChange={(event) => handleChange("phone", event.target.value)}
+                  onChange={(event) => handleChange("phone", formatPhone(event.target.value))}
                   placeholder="(00) 00000-0000"
                 />
               </label>
             </div>
 
-            <label>
-              <span>E-mail</span>
-              <input
-                required
-                type="email"
-                value={form.email}
-                onChange={(event) => handleChange("email", event.target.value)}
-                placeholder="seuemail@exemplo.com"
-              />
-            </label>
+
 
             <label>
               <span>Qual situação melhor representa sua principal dúvida?</span>
