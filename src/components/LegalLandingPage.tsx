@@ -13,6 +13,8 @@ import {
   Send,
   ShieldCheck,
 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+
 
 const heroPhoto = new URL("../../DSC09661-Editar.jpg.jpeg", import.meta.url).href;
 const profilePhoto = new URL("../../DSC09688-Editar.jpg", import.meta.url).href;
@@ -24,25 +26,35 @@ const PAGE_NAME = "Página Trabalho sem Carteira Assinada";
 
 const createEventId = () => `evt_${Date.now()}_${Math.random().toString(36).slice(2, 12)}`;
 
-const trackMetaEvent = (eventName: "Lead" | "Contact", eventId: string, userData?: Record<string, string>) => {
+type MetaEvent = "Lead" | "Contact" | "InitiateCheckout";
+
+const trackMetaEvent = (eventName: MetaEvent, eventId: string, userData?: Record<string, string>) => {
   const fbq = (window as Window & { fbq?: (...args: unknown[]) => void }).fbq;
   fbq?.("track", eventName, {}, { eventID: eventId });
 
-  fetch("/api/meta-capi", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    keepalive: true,
-    body: JSON.stringify({
-      event_name: eventName,
-      event_id: eventId,
-      page_name: PAGE_NAME,
-      event_source_url: window.location.href,
-      user_data: userData,
-    }),
-  }).catch(() => {
-    // O Pixel do navegador continua funcionando mesmo se o endpoint do servidor estiver indisponível.
-  });
+  supabase.functions
+    .invoke("meta-capi", {
+      body: {
+        event_name: eventName,
+        event_id: eventId,
+        page_name: PAGE_NAME,
+        event_source_url: window.location.href,
+        user_data: userData,
+      },
+    })
+    .catch(() => {
+      // O Pixel do navegador continua funcionando mesmo se o servidor estiver indisponível.
+    });
 };
+
+const formatPhone = (value: string) => {
+  const digits = value.replace(/\D/g, "").slice(0, 11);
+  if (digits.length <= 2) return digits.length ? `(${digits}` : "";
+  if (digits.length <= 6) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
+  if (digits.length <= 10) return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`;
+  return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
+};
+
 
 const situations = [
   {
