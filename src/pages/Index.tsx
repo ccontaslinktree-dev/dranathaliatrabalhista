@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ArrowRight, MessageCircle, ShieldCheck } from "lucide-react";
+import { ArrowRight, ChevronRight, MessageCircle, ShieldCheck, Check } from "lucide-react";
 import { LegalLandingPage } from "@/components/LegalLandingPage";
 
 const WHATSAPP_NUMBER = "5585989570299";
@@ -52,7 +52,6 @@ const Index = () => {
   const [selectedSituation, setSelectedSituation] = useState<number | null>(null);
 
   useEffect(() => {
-    // Os CTAs principais agora levam para uma escolha rápida, em vez de abrir o WhatsApp sem contexto.
     const handleClick = (event: MouseEvent) => {
       const target = event.target as HTMLElement | null;
       const button = target?.closest(".legal-primary-button, .legal-outline-button, .legal-text-button");
@@ -65,7 +64,6 @@ const Index = () => {
 
     document.addEventListener("click", handleClick, true);
 
-    // Remove o formulário antigo e qualquer espaço reservado a ele.
     const style = document.createElement("style");
     style.id = "qualification-whatsapp-flow-style";
     style.textContent = `
@@ -107,6 +105,17 @@ const Index = () => {
         font-size: 16px;
         line-height: 1.7;
       }
+      .qualification-instruction {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin: -16px auto 22px;
+        color: #168a4a;
+        font-size: 14px;
+        font-weight: 800;
+      }
+      .qualification-instruction svg { flex: 0 0 auto; }
       .qualification-whatsapp-options {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -115,24 +124,57 @@ const Index = () => {
       .qualification-option {
         width: 100%;
         min-height: 112px;
-        padding: 20px 22px;
-        border: 1px solid #ddd9d0;
+        padding: 20px 18px 20px 22px;
+        border: 2px solid #ddd9d0;
         border-radius: 10px;
         background: #fff;
         color: #17263a;
         text-align: left;
         cursor: pointer;
-        transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
       }
-      .qualification-option:hover, .qualification-option.is-selected {
+      .qualification-option:hover {
         transform: translateY(-2px);
-        border-color: #8b6d3f;
+        border-color: #7ac89a;
         box-shadow: 0 10px 25px rgba(25,36,50,.08);
       }
+      .qualification-option.is-selected {
+        transform: translateY(-2px);
+        border-color: #168a4a;
+        background: #effaf3;
+        box-shadow: 0 10px 25px rgba(22,138,74,.14);
+      }
+      .qualification-option-content { flex: 1; min-width: 0; }
       .qualification-option strong { display: block; font-size: 16px; line-height: 1.35; margin-bottom: 7px; }
       .qualification-option span { display: block; color: #6b727a; font-size: 13px; line-height: 1.55; }
+      .qualification-option.is-selected span { color: #496554; }
+      .qualification-option-arrow {
+        flex: 0 0 auto;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #f1f0ec;
+        color: #8b6d3f;
+        transition: all .18s ease;
+      }
+      .qualification-option:hover .qualification-option-arrow {
+        background: #e9f7ef;
+        color: #168a4a;
+      }
+      .qualification-option.is-selected .qualification-option-arrow {
+        background: #168a4a;
+        color: #fff;
+      }
       .qualification-whatsapp-footer { text-align: center; margin-top: 28px; }
       .qualification-whatsapp-footer p { margin: 0 0 14px; color: #737981; font-size: 13px; }
+      .qualification-whatsapp-footer p.selected-message { color: #168a4a; font-weight: 800; }
       .qualification-whatsapp-button {
         width: min(620px, 100%);
         min-height: 62px;
@@ -165,7 +207,8 @@ const Index = () => {
         .qualification-whatsapp-section { padding: 55px 16px; }
         .qualification-whatsapp-card { padding: 38px 18px; }
         .qualification-whatsapp-options { grid-template-columns: 1fr; }
-        .qualification-option { min-height: auto; }
+        .qualification-option { min-height: auto; padding: 18px 14px 18px 18px; }
+        .qualification-option-arrow { width: 34px; height: 34px; }
         .qualification-whatsapp-button { width: 100%; font-size: 12px; }
       }
     `;
@@ -193,26 +236,40 @@ const Index = () => {
             </p>
           </div>
 
+          <div className="qualification-instruction">
+            <ChevronRight size={19} />
+            <span>Escolha uma das opções abaixo para continuar</span>
+            <ChevronRight size={19} />
+          </div>
+
           <div className="qualification-whatsapp-options">
-            {situations.map((situation, index) => (
-              <button
-                key={situation.title}
-                type="button"
-                className={`qualification-option${selectedSituation === index ? " is-selected" : ""}`}
-                onClick={() => setSelectedSituation(index)}
-                aria-pressed={selectedSituation === index}
-              >
-                <strong>{situation.title}</strong>
-                <span>{situation.description}</span>
-              </button>
-            ))}
+            {situations.map((situation, index) => {
+              const isSelected = selectedSituation === index;
+              return (
+                <button
+                  key={situation.title}
+                  type="button"
+                  className={`qualification-option${isSelected ? " is-selected" : ""}`}
+                  onClick={() => setSelectedSituation(index)}
+                  aria-pressed={isSelected}
+                >
+                  <div className="qualification-option-content">
+                    <strong>{situation.title}</strong>
+                    <span>{situation.description}</span>
+                  </div>
+                  <span className="qualification-option-arrow" aria-hidden="true">
+                    {isSelected ? <Check size={21} strokeWidth={3} /> : <ChevronRight size={21} />}
+                  </span>
+                </button>
+              );
+            })}
           </div>
 
           <div className="qualification-whatsapp-footer">
-            <p>
+            <p className={selected ? "selected-message" : ""}>
               {selected
-                ? `Você selecionou: ${selected.title}`
-                : "Escolha uma opção para personalizar sua mensagem."}
+                ? `✓ Opção selecionada: ${selected.title}`
+                : "Escolha uma opção acima para continuar."}
             </p>
             <button
               className="qualification-whatsapp-button"
